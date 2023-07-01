@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div>
+        <h1>Resolver Sudoku</h1>
+        <form action="">
+            {% csrf_token %}
+            <table id="board" style="margin: auto;">
+                <tbody id="tbady">
+                    {% for i in iterador %}
+                    <tr id="{{forloop.counter}}">
+                        {% for j in iterador %}
+                        {% if i < 4 and forloop.counter < 4 %}
+                        <td class="oscuro">
+                            <input type="number" id="{{i}}{{forloop.counter}}" class="oscuro inp" oninput="val_length(this);
+                            verificar_fila_columna(this.value, this.id, '{% url 'comprobacion' %}')" maxlength="1">
+                        </td>
+                        {% elif i < 4 and forloop.counter > 6 %}
+                        <td class="oscuro">
+                            <input type="number" id="{{i}}{{forloop.counter}}" class="oscuro inp" oninput="val_length(this);
+                            verificar_fila_columna(this.value, this.id, '{% url 'comprobacion' %}')" maxlength="1">
+                        </td>
+                        {% elif i > 3 and i < 7 and forloop.counter > 3 and forloop.counter < 7 %}
+                        <td class="oscuro">
+                            <input type="number" id="{{i}}{{forloop.counter}}" class="oscuro inp" oninput="val_length(this);
+                            verificar_fila_columna(this.value, this.id, '{% url 'comprobacion' %}')" maxlength="1">
+                        </td>
+                        {% elif i > 6 and forloop.counter < 4 %}
+                        <td class="oscuro">
+                            <input type="number" id="{{i}}{{forloop.counter}}" class="oscuro inp" oninput="val_length(this);
+                            verificar_fila_columna(this.value, this.id, '{% url 'comprobacion' %}')" maxlength="1">
+                        </td>
+                        {% elif i > 6 and forloop.counter > 6 %}
+                        <td class="oscuro">
+                            <input type="number" id="{{i}}{{forloop.counter}}" class="oscuro inp" oninput="val_length(this);
+                            verificar_fila_columna(this.value, this.id, '{% url 'comprobacion' %}')" maxlength="1">
+                        </td>
+                        {% else %}
+                        <td class="claro">
+                            <input type="number" id="{{i}}{{forloop.counter}}" class="claro inp" oninput="val_length(this);
+                            verificar_fila_columna(this.value, this.id, '{% url 'comprobacion' %}')" maxlength="1">
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="boton boton-center">
+        <button type="submit" class="azul boton-md" onclick="location.href='{% url 'solucionar' %}'">Resolver</button>
+        <button type="submit" class="rojo" onclick="location.href='{% url 'limpiar' %}'">Limpiar</button>
+    </div>
+    <script src="{% static 'main.js' %}" defer></script>
+    {{tablero|json_script}}
+</body>
+</html>
